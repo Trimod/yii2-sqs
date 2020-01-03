@@ -44,11 +44,7 @@ return [
                 ],
                 'region' => 'Region of Amazon SQS',
                 'version' => 'latest',
-                'accountId' => 'ID of account in Amazon AWS',
-                'queueNameAliases' => [
-                    'aliasForQueue' => 'Real name of queue in Amazon SQS',
-                    'test_queue' => 'TestQueue.fifo'
-                ]
+                'accountId' => 'ID of account in Amazon AWS'
             ]);
         },
         'sqsWatcher' => [
@@ -57,7 +53,7 @@ return [
             'handler' => function (array $messages, array &$receiptHandlers, \snapsuzun\sqs\SqsClient $client) {
                 // handle messages                
             }
-        ],
+        ]
     ],
 ];
 ```
