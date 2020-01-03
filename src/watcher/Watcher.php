@@ -141,7 +141,7 @@ class Watcher extends Component implements BootstrapInterface
      * @param array $messages
      * @return array
      */
-    protected function prepareMessages(array $messages): array
+    protected function prepareMessages(array $messages)
     {
         $messageBodies = [];
         $receiptHandlers = [];

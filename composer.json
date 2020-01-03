@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "php": ">=7.1",
+    "php": ">=7.0",
     "yiisoft/yii2": "~2.0.13",
     "aws/aws-sdk-php": "^3.0@dev",
     "symfony/process": "*",

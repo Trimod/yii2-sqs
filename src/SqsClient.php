@@ -19,11 +19,6 @@ class SqsClient extends BaseSqsClient
     /**
      * @var array
      */
-    public $queueNameAliases = [];
-
-    /**
-     * @var array
-     */
     protected $_knownQueueUrls = [];
 
     /**
@@ -52,14 +47,11 @@ class SqsClient extends BaseSqsClient
     }
 
     /**
-     * Получение URL очереди по ее названию
-     *
-     * @param string $queueName Алиас из sqsQueueAliases или название очереди
+     * @param string $queueName
      * @return null|string
      */
-    public function getSqsQueueUrl(string $queueName): ?string
+    public function getSqsQueueUrl(string $queueName)
     {
-        $queueName = $this->getRealQueueName($queueName);
         if (empty($this->_knownQueueUrls[$queueName])) {
             $args = [
                 'QueueName' => $queueName
@@ -74,19 +66,15 @@ class SqsClient extends BaseSqsClient
     }
 
     /**
-     * Проверка на существование очереди
-     *
      * @param string $queueName
      * @return bool|null
      */
-    public function existsQueue(string $queueName): ?bool
+    public function existsQueue(string $queueName)
     {
-        return isset($this->getQueueUrlList()[$this->getQueueName($this->getRealQueueName($queueName))]);
+        return isset($this->getQueueUrlList()[$queueName]);
     }
 
     /**
-     * Получение именованного списка URL очередей
-     *
      * @return array|mixed|null
      */
     public function getQueueUrlList()
@@ -104,53 +92,13 @@ class SqsClient extends BaseSqsClient
     }
 
     /**
-     * Получение реального названия очереди, с проверкой на существование алиаса имени в параметрах
-     *
-     * @param string $queueName
-     * @return string
-     */
-    public function getRealQueueName(string $queueName): string
-    {
-        return $this->queueNameAliases[$queueName] ?? $queueName;
-    }
-
-    /**
-     * Получение названия очереди с учетом флага
-     *
-     * @param string $queueName
-     * @return string
-     */
-    public function getQueueName(string $queueName): string
-    {
-        if (YII_ENV_DEV) {
-            return 'dev_' . $queueName;
-        }
-        return $queueName;
-    }
-
-    /**
      * @param array $args
      * @return \Aws\Result
      */
     public function createQueue(array $args = [])
     {
         $this->_listQueues = null;
-        if (isset($args['QueueName'])) {
-            $args['QueueName'] = $this->getQueueName($args['QueueName']);
-        }
         return parent::createQueue($args);
-    }
-
-    /**
-     * @param array $args
-     * @return \Aws\Result
-     */
-    public function getQueueUrl(array $args = [])
-    {
-        if (isset($args['QueueName'])) {
-            $args['QueueName'] = $this->getQueueName($args['QueueName']);
-        }
-        return parent::getQueueUrl($args);
     }
 
     /**
