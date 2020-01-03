@@ -8,16 +8,20 @@ Installation
 
 The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
-Either run
+Add 
 
 ```
-php composer.phar require --prefer-dist snapsuzun/yii2-sqs
+"repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/Trimod/yii2-sqs.git"
+        }
+    ],
 ```
-
-or add
+before required section and 
 
 ```
-"snapsuzun/yii2-sqs": "dev-master"
+"snapsuzun/yii2-sqs": "dev-trimod"
 ```
 
 to the require section of your `composer.json` file.
@@ -34,7 +38,7 @@ return [
     'components' => [
         'sqsClient' => function () {
             return new \snapsuzun\sqs\SqsClient([
-                'cridentials => [
+                'credentials' => [
                     'key' => 'Api key of Amazon AWS',
                     'secret' => 'Secret key of Amazon AWS'
                 ],
